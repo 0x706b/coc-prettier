@@ -1,6 +1,9 @@
 import {
   DocumentFormattingEditProvider,
-  DocumentRangeFormattingEditProvider, Uri, window, workspace,
+  DocumentRangeFormattingEditProvider,
+  Uri,
+  window,
+  workspace,
   CancellationToken,
   FormattingOptions,
   Range,
@@ -87,13 +90,13 @@ function mergeConfig(
 ): any {
   return hasPrettierConfig
     ? Object.assign(
-      {
-        parser: vscodeConfig.parser, // always merge our inferred parser in
-        filepath: vscodeConfig.filepath // always merge filepath to detect file type
-      },
-      prettierConfig,
-      additionalConfig
-    )
+        {
+          parser: vscodeConfig.parser, // always merge our inferred parser in
+          filepath: vscodeConfig.filepath // always merge filepath to detect file type
+        },
+        prettierConfig,
+        additionalConfig
+      )
     : Object.assign(vscodeConfig, prettierConfig, additionalConfig)
 }
 /**
@@ -155,13 +158,13 @@ export async function format(
     'javascriptreact',
     'typescript',
     'typescriptreact',
-    'vue',
+    'vue'
   ].includes(languageId)
 
   const { config: fileOptions, error } = await resolveConfig(fileName, {
     editorconfig: true,
     onlyUseLocalVersion: localOnly,
-    requireConfig: vscodeConfig.requireConfig,
+    requireConfig: vscodeConfig.requireConfig
   })
   const hasConfig = fileOptions != null
   if (!hasConfig && vscodeConfig.requireConfig) {
@@ -192,7 +195,7 @@ export async function format(
       useTabs: vscodeConfig.useTabs,
       proseWrap: vscodeConfig.proseWrap,
       arrowParens: vscodeConfig.arrowParens,
-      filepath: fileName,
+      filepath: fileName
     }
   )
 
@@ -206,7 +209,7 @@ export async function format(
         return prettierTslint({
           text,
           filePath: fileName,
-          fallbackPrettierOptions: prettierOptions,
+          fallbackPrettierOptions: prettierOptions
         })
       },
       text,
@@ -216,19 +219,19 @@ export async function format(
 
   if (vscodeConfig.eslintIntegration && doesParserSupportEslint) {
     return safeExecution(
-      () => {
+      new Promise((resolve) => {
         const prettierEslint = requireLocalPkg(
           u.fsPath,
-          'prettier-eslint'
+          '@0x706b/prettier-eslint-8'
         ) as PrettierEslintFormat
-        // setUsedModule('prettier-eslint', 'Unknown', true)
-
-        return prettierEslint({
-          text,
-          filePath: fileName,
-          fallbackPrettierOptions: prettierOptions,
-        })
-      },
+        return prettierEslint
+          .format({
+            text,
+            filePath: fileName,
+            fallbackPrettierOptions: prettierOptions
+          })
+          .then(resolve)
+      }),
       text,
       fileName
     )
@@ -243,7 +246,7 @@ export async function format(
       prettierStylelint.format({
         text,
         filePath: fileName,
-        prettierOptions,
+        prettierOptions
       }),
       text,
       fileName
@@ -288,8 +291,8 @@ export function fullDocumentRange(document: TextDocument): Range {
 
 class PrettierEditProvider
   implements
-  DocumentRangeFormattingEditProvider,
-  DocumentFormattingEditProvider {
+    DocumentRangeFormattingEditProvider,
+    DocumentFormattingEditProvider {
   constructor(private _fileIsIgnored: (filePath: string) => boolean) {}
 
   public provideDocumentRangeFormattingEdits(
@@ -300,7 +303,7 @@ class PrettierEditProvider
   ): Promise<TextEdit[]> {
     return this._provideEdits(document, {
       rangeStart: document.offsetAt(range.start),
-      rangeEnd: document.offsetAt(range.end),
+      rangeEnd: document.offsetAt(range.end)
     })
   }
 
@@ -322,10 +325,12 @@ class PrettierEditProvider
     }
 
     const code = await format(document.getText(), document, options)
-    const edits: TextEdit[] = [{
-      range: fullDocumentRange(document),
-      newText: code
-    }]
+    const edits: TextEdit[] = [
+      {
+        range: fullDocumentRange(document),
+        newText: code
+      }
+    ]
     const { disableSuccessMessage } = getConfig()
 
     if (edits && edits.length && !disableSuccessMessage) {

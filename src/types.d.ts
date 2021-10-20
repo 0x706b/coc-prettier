@@ -183,7 +183,9 @@ interface PrettierEslintOptions {
  * @param {PrettierEslintOptions} options - Option bag for prettier-eslint.
  * @returns {string} the formatted code.
  */
-export type PrettierEslintFormat = (options: PrettierEslintOptions) => string
+export type PrettierEslintFormat = {
+  format: (options: PrettierEslintOptions) => Promise<string>
+}
 
 interface PrettierTslintOptions {
   /**
