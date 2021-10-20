@@ -1,9 +1,9 @@
 {
-  "name": "coc-prettier",
+  "name": "@0x706b/coc-prettier",
   "version": "1.1.24",
   "description": "prettier extension for coc.nvim",
   "main": "lib/index.js",
-  "publisher": "chemzqm",
+  "publisher": "0x706b",
   "keywords": [
     "coc.nvim",
     "prettier"
@@ -217,6 +217,9 @@
     ]
   },
   "author": "chemzqm@gmail.com",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "devDependencies": {
     "@chemzqm/tsconfig": "^0.0.3",
