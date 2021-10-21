@@ -219,7 +219,7 @@ export async function format(
 
   if (vscodeConfig.eslintIntegration && doesParserSupportEslint) {
     return safeExecution(
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         const prettierEslint = requireLocalPkg(
           u.fsPath,
           '@0x706b/prettier-eslint-8'
@@ -231,6 +231,7 @@ export async function format(
             fallbackPrettierOptions: prettierOptions
           })
           .then(resolve)
+          .catch(reject)
       }),
       text,
       fileName
