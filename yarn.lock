@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@0x706b/prettier-eslint-8@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@0x706b/prettier-eslint-8/-/prettier-eslint-8-0.0.2.tgz#4fa22ed4040a49472dff0ff8ee1cbde99a6177f5"
-  integrity sha512-zHuYieJKj2f2I+NTuByYI96YYwUDHf7iSVdef8ZenofSo6t4QyNriDvXqj7OWWlE+7hswl2CM29xfc6CB1KXSQ==
+"@0x706b/prettier-eslint-8@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@0x706b/prettier-eslint-8/-/prettier-eslint-8-0.0.3.tgz#b581799c9a6ad0bf7b98b8fbaad937f65a184bf1"
+  integrity sha512-ntps2Q3klzYn+QGTk9giir3j6jrBhi4GaaxIwxTfep+fyhQ2XDnZ50OBnGTQnCJZLmLqEmYtllt47jaHCIJLew==
   dependencies:
     fp-ts "^2.11.5"
     monocle-ts "^2.3.11"
